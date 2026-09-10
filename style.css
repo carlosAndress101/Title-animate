@@ -62,6 +62,12 @@ h1 span {
      word gets the full start→end range and the light traverses its own width. */
   width: fit-content;
   margin-inline: auto;
+  /* Negative tracking applies after the last character too, so the box ends
+     before the final period's ink does — and the background is only painted
+     inside the box, which clipped the period. Widen the paint area on both
+     sides: symmetric so the centring is unaffected, and invisible because the
+     background is clipped to the glyphs anyway. */
+  padding-inline: 0.1em;
 }
 
 /* The gradient only exists where it can be clipped to the glyphs. Without
