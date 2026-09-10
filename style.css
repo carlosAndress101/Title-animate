@@ -1,45 +1,156 @@
-body{
-    background: black;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    display: grid;
-    place-content: center;
-    min-height: 100vh;
+/* ---------------------------------------------------------------------------
+   sh1ft3r — animated title
+
+   Motion thesis: the three words are a pipeline, not a rotation. One ribbon of
+   light travels through it — entering a line, settling so the word reads fully
+   lit, then leaving on the side the next line enters from, so the light snakes
+   down the stack. After the last line the page takes a beat of stillness.
+
+   The light is a band inside a 500%-wide gradient whose outer thirds are the
+   same white as the resting text, so travel is a single animated property and
+   the words are never anything but legible. Travel runs 87.5%→12.5% rather than
+   end to end: those are the outermost positions where the band is still fully
+   clear of the word, so none of the duration is spent off screen.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --cycle: 10.2s;
 }
 
-h1{
-    font-size: 8rem ;
-    font-weight: 800;
-    letter-spacing: -.06em;
-    text-align: center;
-    margin: 0 0 16px;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-span{
-    display: block;
-    color: #fff;
-    line-height: 1.1;
-    padding: 0 0 12px;
-    position: relative;
-    z-index: 1;
+body {
+  margin: 0;
+  padding: 6vmin 5vw;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-content: center;
+  background: #000;
+  color: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-span::before {
-    background: linear-gradient(90deg, var(--start-color), var(--end-color));
-    content: var(--content);
-    position: absolute;
-    inset: 0;
+h1 {
+  margin: 0;
+  /* 19.5vw lands the longest word ("Develop." = 3.78em) at ~82% of the
+     available width on phones; 8rem is the incumbent display size. */
+  font-size: clamp(2.75rem, 19.5vw, 8rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 1.05;
+  text-align: center;
+}
+
+/* Tight display tracking is the identity, but it needs air at phone sizes. */
+@media (max-width: 40em) {
+  h1 {
+    letter-spacing: -0.04em;
+  }
+}
+
+h1 span {
+  display: block;
+  /* Hug the word so the gradient maps to the glyphs, not the column: every
+     word gets the full start→end range and the light traverses its own width. */
+  width: fit-content;
+  margin-inline: auto;
+}
+
+/* The gradient only exists where it can be clipped to the glyphs. Without
+   background-clip:text it would paint as a pale slab behind the words, so the
+   whole treatment — colour, clip, and motion — lives behind the feature query.
+   The unsupported path is plain white text on black, fully legible. */
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  h1 span {
+    background-image: linear-gradient(
+      90deg,
+      #fff 0 30%,
+      var(--start-color) 40%,
+      var(--end-color) 60%,
+      #fff 70% 100%
+    );
+    background-size: 500% 100%;
+    background-repeat: no-repeat;
+    background-position: 87.5% 0;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: animated 8s infinite;
-    animation-delay: var(--delay);
+    color: transparent;
+    animation: pass-ltr var(--cycle) var(--delay, 0s) infinite;
+  }
+
+  /* Serpentine: the middle line is travelled in the opposite direction, so the
+     light leaves line 1 and line 2 on the same edge the next one arrives at. */
+  h1 span:nth-child(2) {
+    animation-name: pass-rtl;
+  }
 }
 
-@keyframes animated {
-    0%, 16.667%, 100%{
-        opacity: 1;
-    }
+/* 1400ms in, 900ms lit, 1000ms out, inside a 10.2s cycle. The entry curve is
+   deliberately not an exponential ease-out: over this distance expo spends its
+   travel in the first quarter of the duration, which reads as a colour popping
+   on rather than a light arriving. This one keeps the band moving the whole way
+   and only decelerates into the settle. Both ends of travel are the white
+   resting state, so the loop's reset is invisible. */
+@keyframes pass-ltr {
+  0% {
+    background-position: 87.5% 0;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  13.73% {
+    background-position: 50% 0;
+    animation-timing-function: linear;
+  }
+  22.55% {
+    background-position: 50% 0;
+    animation-timing-function: cubic-bezier(0.5, 0, 0.85, 0.5);
+  }
+  32.35%,
+  100% {
+    background-position: 12.5% 0;
+  }
+}
 
-    33.333%, 83.333%{
-        opacity: 0;
-    }
+@keyframes pass-rtl {
+  0% {
+    background-position: 12.5% 0;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  13.73% {
+    background-position: 50% 0;
+    animation-timing-function: linear;
+  }
+  22.55% {
+    background-position: 50% 0;
+    animation-timing-function: cubic-bezier(0.5, 0, 0.85, 0.5);
+  }
+  32.35%,
+  100% {
+    background-position: 87.5% 0;
+  }
+}
+
+/* No travel. The pass resolves into its settled frame and stays there: all
+   three words hold their full gradient at once, which is the poster the motion
+   was building toward anyway. */
+@media (prefers-reduced-motion: reduce) {
+  h1 span {
+    animation: none;
+    background-position: 50% 0;
+  }
+}
+
+/* Transparent fill would otherwise select as invisible glyphs. */
+::selection {
+  background: #fff;
+  color: #000;
+  -webkit-text-fill-color: #000;
 }
