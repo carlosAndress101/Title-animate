@@ -1,12 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="sh1ft3r">
-  <defs>
-    <linearGradient id="sh1ft3r-g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#007CF0"/>
-      <stop offset="1" stop-color="#00DFD8"/>
-    </linearGradient>
-  </defs>
-  <rect width="100" height="100" rx="22" fill="#000"/>
-  <g transform="translate(50 50) scale(0.7) translate(-50 -50)">
-    <path d="M 68 21.7 A 22 18 0 1 0 50 50 A 22 18 0 1 1 32 78.3" fill="none" stroke="url(#sh1ft3r-g)" stroke-width="15" stroke-linecap="butt"/>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144" role="img" aria-label="sh1ft3r"><rect width="144" height="144" rx="10" fill="#000"/><g transform="translate(32.43 15.02) scale(0.7915)"><path d="M 91.50 32.00 L 91.50 6.50 L 5.50 6.50 L 5.50 63.73 L 69.50 95.73 L 69.50 112.50 L 33.50 112.50 L 33.50 94.00 L 8.50 112.00 L 8.50 137.50 L 94.50 137.50 L 94.50 80.27 L 30.50 48.27 L 30.50 31.50 L 66.50 31.50 L 66.50 50.00 Z" fill="#fff"/></g></svg>

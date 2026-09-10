@@ -46,17 +46,20 @@ Success is a visitor leaving with an accurate, favorable impression of the owner
 ## Brand Commitments
 
 - **sh1ft3r** is the owner's handle and personal brand, and is binding. Future work should treat it as the identity of the site, not decoration.
-- `image/sh1ft3r-logo.svg` is the master brand mark: an S drawn as two tangent elliptical arcs on a
-  black rounded container, filled with the #007CF0 → #00DFD8 gradient the site's first line uses. Every
-  raster form is generated from it, so the SVG is the one file to edit.
-- `image/sh1ft3r-logo.ico` (16/32/48) and `image/apple-touch-icon.png` (180, opaque, square) are derived
-  outputs. There is still no wordmark, no horizontal lockup, and no monochrome variant.
-- No confirmed voice, tone, color, or typographic commitments beyond the handle and the mark.
+- `image/sh1ft3r-logo.svg` is the master brand mark, with `image/sh1ft3r-mark.svg` as the container-less
+  version (painted with `currentColor`). It is the original logo redrawn, not replaced: the angular S with
+  its straight diagonal spine and two hooks is preserved and rebuilt as exact vector geometry. The
+  original's grey gradient, baked-in white background and soft edges are gone.
+- The mark is monochrome white on purpose. The page's gradients belong to the type; the mark has to survive
+  a light tab, a dark tab, 16px, and eventually print.
+- `image/sh1ft3r-logo.ico` (16/32/48, per-size optical variants) and `image/apple-touch-icon.png` (180px,
+  square, opaque) are derived outputs, regenerated from the SVG. There is still no wordmark and no
+  horizontal lockup.
 
 ## Evidence on Hand
 
 - `index.html` / `style.css` — the animated title, the only real artifact.
-- `image/sh1ft3r-logo.ico` — the brand mark, favicon-resolution only.
+- `image/sh1ft3r-logo.svg` / `sh1ft3r-mark.svg` — the brand mark, vector; `.ico` and `apple-touch-icon.png` derive from it.
 - `README.md` — two demo GIFs hosted on GitHub user-content; no prose.
 
 **Absences future work must not fill by invention:** there are no work samples, no case studies, no bio, no testimonials, no clients, no metrics, no résumé, and no contact details anywhere in this repository. A portfolio built here needs the owner to supply that content; placeholder lorem or fabricated credentials would defeat the surface's only purpose.
